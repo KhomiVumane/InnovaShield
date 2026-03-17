@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Watchlist - InnovaShield</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #633806; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th { background: #633806; color: white; padding: 10px; }
+        td { padding: 10px; border: 1px solid #ddd; }
+        tr:nth-child(even) { background: #f2f2f2; }
+        button { background: #A32D2D; color: white; padding: 8px 16px; border: none; cursor: pointer; border-radius: 4px; }
+        button:hover { background: #501313; }
+    </style>
+</head>
+<body>
+    <h1>Watchlist</h1>
+
+    <!-- LIST ALL WATCHLIST ENTRIES -->
+    <h2>All Saved Patents</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>User ID</th>
+            <th>Patent ID</th>
+            <th>Date Added</th>
+            <th>Notes</th>
+            <th>Action</th>
+        </tr>
+        <% watchlist.forEach(item => { %>
+        <tr>
+            <td><%= item.watchlist_id %></td>
+            <td><%= item.user_id %></td>
+            <td><%= item.patent_id %></td>
+            <td><%= item.date_added.toISOString().split('T')[0] %></td>
+            <td><%= item.notes %></td>
+            <td>
+                <form action="/watchlist/delete/<%= item.watchlist_id %>" method="POST">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        <% }) %>
+    </table>
+
+</body>
+</html>

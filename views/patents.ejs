@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patents - InnovaShield</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #185FA5; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th { background: #185FA5; color: white; padding: 10px; }
+        td { padding: 10px; border: 1px solid #ddd; }
+        tr:nth-child(even) { background: #f2f2f2; }
+        input, select { width: 100%; padding: 8px; margin: 5px 0; }
+        button { background: #185FA5; color: white; padding: 10px 20px; border: none; cursor: pointer; }
+        button:hover { background: #0C447C; }
+        .form-box { background: #f9f9f9; padding: 20px; border-radius: 8px; max-width: 500px; }
+    </style>
+</head>
+<body>
+    <h1>Patents</h1>
+
+    <!-- LIST ALL PATENTS -->
+    <h2>All Patents</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Owner</th>
+            <th>Industry</th>
+            <th>Filing Date</th>
+            <th>Expiry Date</th>
+            <th>Status</th>
+        </tr>
+        <% patents.forEach(patent => { %>
+        <tr>
+            <td><%= patent.patent_id %></td>
+            <td><%= patent.title %></td>
+            <td><%= patent.owner %></td>
+            <td><%= patent.industry %></td>
+            <td><%= patent.filing_date.toISOString().split('T')[0] %></td>
+            <td><%= patent.expiry_date.toISOString().split('T')[0] %></td>
+            <td><%= patent.status %></td>
+        </tr>
+        <% }) %>
+    </table>
+
+    <!-- INSERT NEW PATENT FORM -->
+    <h2>Add New Patent</h2>
+    <div class="form-box">
+        <form action="/patents/add" method="POST">
+            <label>Title:</label>
+            <input type="text" name="title" required>
+            <label>Owner:</label>
+            <input type="text" name="owner" required>
+            <label>Industry:</label>
+            <input type="text" name="industry">
+            <label>Filing Date:</label>
+            <input type="date" name="filing_date" required>
+            <label>Expiry Date:</label>
+            <input type="date" name="expiry_date" required>
+            <label>Status:</label>
+            <select name="status">
+                <option value="Active">Active</option>
+                <option value="Expired">Expired</option>
+                <option value="Pending">Pending</option>
+                <option value="Revoked">Revoked</option>
+            </select>
+            <label>Description:</label>
+            <input type="text" name="description">
+            <br><br>
+            <button type="submit">Add Patent</button>
+        </form>
+    </div>
+</body>
+</html>

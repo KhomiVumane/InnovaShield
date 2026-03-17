@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Trademarks - InnovaShield</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #085041; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th { background: #085041; color: white; padding: 10px; }
+        td { padding: 10px; border: 1px solid #ddd; }
+        tr:nth-child(even) { background: #f2f2f2; }
+        input, select { width: 100%; padding: 8px; margin: 5px 0; }
+        button { background: #085041; color: white; padding: 10px 20px; border: none; cursor: pointer; }
+        button:hover { background: #04342C; }
+        .form-box { background: #f9f9f9; padding: 20px; border-radius: 8px; max-width: 500px; }
+    </style>
+</head>
+<body>
+    <h1>Trademarks</h1>
+
+    <!-- LIST ALL TRADEMARKS -->
+    <h2>All Trademarks</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Owner</th>
+            <th>Industry</th>
+            <th>Registration Date</th>
+            <th>Expiry Date</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        <% trademarks.forEach(trademark => { %>
+        <tr>
+            <td><%= trademark.trademark_id %></td>
+            <td><%= trademark.name %></td>
+            <td><%= trademark.owner %></td>
+            <td><%= trademark.industry %></td>
+            <td><%= trademark.registration_date.toISOString().split('T')[0] %></td>
+            <td><%= trademark.expiry_date.toISOString().split('T')[0] %></td>
+            <td><%= trademark.status %></td>
+            <td>
+                <a href="/trademarks/edit/<%= trademark.trademark_id %>">Edit</a>
+            </td>
+        </tr>
+        <% }) %>
+    </table>
+
+    <!-- UPDATE TRADEMARK FORM -->
+    <% if (typeof editTrademark !== 'undefined') { %>
+    <h2>Edit Trademark</h2>
+    <div class="form-box">
+        <form action="/trademarks/update" method="POST">
+            <input type="hidden" name="trademark_id" value="<%= editTrademark.trademark_id %>">
+            <label>Name:</label>
+            <input type="text" name="name" value="<%= editTrademark.name %>" required>
+            <label>Owner:</label>
+            <input type="text" name="owner" value="<%= editTrademark.owner %>" required>
+            <label>Industry:</label>
+            <input type="text" name="industry" value="<%= editTrademark.industry %>">
+            <label>Status:</label>
+            <select name="status">
+                <option value="Active" <%= editTrademark.status === 'Active' ? 'selected' : '' %>>Active</option>
+                <option value="Expired" <%= editTrademark.status === 'Expired' ? 'selected' : '' %>>Expired</option>
+                <option value="Pending" <%= editTrademark.status === 'Pending' ? 'selected' : '' %>>Pending</option>
+                <option value="Renewed" <%= editTrademark.status === 'Renewed' ? 'selected' : '' %>>Renewed</option>
+            </select>
+            <br><br>
+            <button type="submit">Update Trademark</button>
+        </form>
+    </div>
+    <% } %>
+
+</body>
+</html>

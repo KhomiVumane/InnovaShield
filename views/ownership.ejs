@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ownership Changes - InnovaShield</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #712B13; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th { background: #712B13; color: white; padding: 10px; }
+        td { padding: 10px; border: 1px solid #ddd; }
+        tr:nth-child(even) { background: #f2f2f2; }
+        input { width: 100%; padding: 8px; margin: 5px 0; }
+        button { background: #712B13; color: white; padding: 10px 20px; border: none; cursor: pointer; }
+        button:hover { background: #4A1B0C; }
+        .form-box { background: #f9f9f9; padding: 20px; border-radius: 8px; max-width: 500px; }
+        label { font-weight: bold; display: block; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Ownership Changes</h1>
+
+    <h2>All Ownership Changes</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Patent ID</th>
+            <th>Old Owner</th>
+            <th>New Owner</th>
+            <th>Change Date</th>
+            <th>Reason</th>
+        </tr>
+        <% ownership.forEach(item => { %>
+        <tr>
+            <td><%= item.change_id %></td>
+            <td><%= item.patent_id %></td>
+            <td><%= item.old_owner %></td>
+            <td><%= item.new_owner %></td>
+            <td><%= item.change_date.toISOString().split('T')[0] %></td>
+            <td><%= item.reason %></td>
+        </tr>
+        <% }) %>
+    </table>
+
+    <h2>Record New Ownership Change</h2>
+    <div class="form-box">
+        <form action="/ownership/add" method="POST">
+            <label>Patent ID:</label>
+            <input type="number" name="patent_id" required>
+
+            <label>Old Owner:</label>
+            <input type="text" name="old_owner" required>
+
+            <label>New Owner:</label>
+            <input type="text" name="new_owner" required>
+
+            <label>Change Date:</label>
+            <input type="date" name="change_date" required>
+
+            <label>Reason:</label>
+            <input type="text" name="reason">
+
+            <br><br>
+            <button type="submit">Record Change</button>
+        </form>
+    </div>
+
+</body>
+</html>
